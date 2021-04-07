@@ -4,7 +4,7 @@ class CreateTasks < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :description
       t.text :measurement_unit
-      t.number :daily_target
+      t.integer :daily_target
 
       t.timestamps
     end
