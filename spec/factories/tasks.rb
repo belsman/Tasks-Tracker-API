@@ -3,6 +3,6 @@ FactoryBot.define do
       name {  Faker::Lorem.word }
       description { Faker::Lorem.word }
       measurement_unit {  Faker::Lorem.word }
-      daily_target { Faker::Number.number(1) }
+      daily_target { Faker::Number.number(digits: 1) }
     end
 end

@@ -6,13 +6,10 @@ RSpec.describe 'Tasks API', type: :request do
   let!(:tasks) { create_list(:task, 5) }
   let(:task_id) { tasks.first.id }
 
-  # Test suite for GET /todos
   describe 'GET /tasks' do
-    # make HTTP get request before each example
     before { get '/tasks' }
 
     it 'returns tasks' do
-      # Note `json` is a custom helper to parse JSON responses
       expect(json).not_to be_empty
       expect(json.size).to eq(5)
     end
@@ -22,7 +19,7 @@ RSpec.describe 'Tasks API', type: :request do
     end
   end
 
-  # Test suite for GET /todos/:id
+  # Test suite for GET /tasks/:id
   describe 'GET /tasks/:id' do
     before { get "/tasks/#{task_id}" }
 
@@ -53,14 +50,13 @@ RSpec.describe 'Tasks API', type: :request do
   # Test suite for POST /tasks
   describe 'POST /tasks' do
     # valid payload
-    let(:valid_attributes) { 
-      { name: 'Running', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: '1' } 
-    }
+    let(:valid_attributes) { {task: {name: 'Running', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: 1 }} }
+    let(:invalid_attributes) { {task: {name: 'Running' }} }
 
     context 'when the request is valid' do
       before { post '/tasks', params: valid_attributes }
 
-      it 'creates a todo' do
+      it 'creates a task' do
         expect(json['name']).to eq('Running')
       end
 
@@ -70,32 +66,38 @@ RSpec.describe 'Tasks API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/tasks', params: { name: 'No Running' } }
+      before { post '/tasks', params: invalid_attributes }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
       end
 
       it 'returns a validation failure message' do
-        expect(response.body)
-          .to match(/Validation failed: Created by can't be blank/)
+        expect(json['daily_target']).to eq(["can't be blank"])
       end
+
     end
   end
 
-  # Test suite for PUT /tasks/:id
+  # Test suite for PATCH /tasks/:id
   describe 'PUT /tasks/:id' do
-    let(:valid_attributes) { { name: 'Shopping' } }
+    let(:valid_attributes) { {task: {name: 'Running X', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: 1 }} }
 
     context 'when the record exists' do
       before { put "/tasks/#{task_id}", params: valid_attributes }
 
-      it 'updates the record' do
-        expect(response.body).to be_empty
+      it 'returns the task' do
+        expect(json).not_to be_empty
+        expect(json['id']).to eq(task_id)
       end
 
-      it 'returns status code 204' do
-        expect(response).to have_http_status(204)
+      it 'returns the task with an edited name' do
+        expect(json).not_to be_empty
+        expect(json['name']).to eq('Running X')
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
       end
     end
   end

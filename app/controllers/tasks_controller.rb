@@ -10,7 +10,7 @@ class TasksController < ApplicationController
 
   # GET /tasks/1
   def show
-    render json: @task
+    json_response(@task)
   end
 
   # POST /tasks
@@ -36,6 +36,7 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   def destroy
     @task.destroy
+    head :no_content
   end
 
   private
