@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_07_173637) do
+ActiveRecord::Schema.define(version: 2021_04_08_081340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "measurements", force: :cascade do |t|
     t.integer "value"
-    t.bigint "tasks_id", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["tasks_id"], name: "index_measurements_on_tasks_id"
+    t.bigint "task_id"
+    t.index ["task_id"], name: "index_measurements_on_task_id"
     t.index ["user_id"], name: "index_measurements_on_user_id"
   end
 
@@ -40,6 +40,6 @@ ActiveRecord::Schema.define(version: 2021_04_07_173637) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "measurements", "tasks", column: "tasks_id"
+  add_foreign_key "measurements", "tasks"
   add_foreign_key "measurements", "users"
 end
