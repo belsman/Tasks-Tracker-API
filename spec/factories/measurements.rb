@@ -1,7 +1,11 @@
 FactoryBot.define do
-    factory :measurement do
-      value { Faker::Number.number(digits: 20) }
-      user { Faker::Number.number(digits: 10) }
-      task { Faker::Number.number(digits: 10) }
-    end
+  factory :measurement do
+    value { Faker::Number.number(digits: 4) }
+    user { Faker::Number.number(digits: 4) }
+    task { Faker::Number.number(digits: 4) }
+  end
+
+  factory :user do
+    username { Faker::Lorem.word }
+  end
 end

@@ -50,8 +50,10 @@ RSpec.describe 'Tasks API', type: :request do
   # Test suite for POST /tasks
   describe 'POST /tasks' do
     # valid payload
-    let(:valid_attributes) { {task: {name: 'Running', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: 1 }} }
-    let(:invalid_attributes) { {task: {name: 'Running' }} }
+    let(:valid_attributes) do
+      { task: { name: 'Running', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: 1 } }
+    end
+    let(:invalid_attributes) { { task: { name: 'Running' } } }
 
     context 'when the request is valid' do
       before { post '/tasks', params: valid_attributes }
@@ -75,13 +77,14 @@ RSpec.describe 'Tasks API', type: :request do
       it 'returns a validation failure message' do
         expect(json['daily_target']).to eq(["can't be blank"])
       end
-
     end
   end
 
   # Test suite for PATCH /tasks/:id
   describe 'PUT /tasks/:id' do
-    let(:valid_attributes) { {task: {name: 'Running X', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: 1 }} }
+    let(:valid_attributes) do
+      { task: { name: 'Running X', description: 'Lorem stuffs goes here', measurement_unit: 'km', daily_target: 1 } }
+    end
 
     context 'when the record exists' do
       before { put "/tasks/#{task_id}", params: valid_attributes }

@@ -1,5 +1,5 @@
 class MeasurementsController < ApplicationController
-  before_action :set_measurement, only: [:show, :update, :destroy]
+  before_action :set_measurement, only: %i[show update destroy]
 
   # GET /measurements
   def index
@@ -47,6 +47,6 @@ class MeasurementsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def measurement_params
-    params.require(:measurement).permit(:value, :tasks_id, :user_id)
+    params.require(:measurement).permit(:value, :task_id, :user_id)
   end
 end

@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_08_102540) do
+ActiveRecord::Schema.define(version: 2021_04_09_075709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "measurements", force: :cascade do |t|
-    t.integer "value"
-    t.bigint "user_id", null: false
+    t.bigint "value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "task_id"
+    t.bigint "user_id"
     t.index ["task_id"], name: "index_measurements_on_task_id"
     t.index ["user_id"], name: "index_measurements_on_user_id"
   end
