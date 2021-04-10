@@ -9,9 +9,10 @@ RSpec.describe 'Tasks API', type: :request do
   let(:task_id) { task.id }
   let(:user_id) { user.id }
   let(:measurement_id) { measurements.first.id }
+  let(:headers) { valid_headers }
 
   describe 'GET /measurements' do
-    before { get '/measurements' }
+    before { get '/measurements', headers: headers }
 
     it 'returns measurements' do
       expect(json).not_to be_empty
@@ -25,7 +26,7 @@ RSpec.describe 'Tasks API', type: :request do
 
   # Test suite for GET /measurements/:id
   describe 'GET /measurements/:id' do
-    before { get "/measurements/#{measurement_id}" }
+    before { get "/measurements/#{measurement_id}", headers: headers }
 
     context 'when the record exists' do
       it 'returns the measurement' do
@@ -52,11 +53,11 @@ RSpec.describe 'Tasks API', type: :request do
   end
 
   describe 'POST /measurements' do
-    let(:valid_attributes) { { measurement: { value: 10, user_id: user_id, task_id: task_id } } }
-    let(:invalid_attributes) { { measurement: { value: 10 } } }
+    let(:valid_attributes) { { measurement: { value: 10, user_id: user_id, task_id: task_id } }.to_json }
+    let(:invalid_attributes) { { measurement: { value: 10 } }.to_json }
 
     context 'when the request is valid' do
-      before { post '/measurements', params: valid_attributes }
+      before { post '/measurements', params: valid_attributes, headers: headers }
 
       it 'creates a measurement' do
         expect(json['value']).to eq(10)
@@ -68,7 +69,7 @@ RSpec.describe 'Tasks API', type: :request do
     end
 
     context 'when the request is invalid' do
-      before { post '/measurements', params: invalid_attributes }
+      before { post '/measurements', params: invalid_attributes, headers: headers }
 
       it 'returns status code 422' do
         expect(response).to have_http_status(422)
@@ -81,10 +82,10 @@ RSpec.describe 'Tasks API', type: :request do
   end
 
   describe 'PUT /measurements/:id' do
-    let(:valid_attributes) { { measurement: { value: 11, user_id: user_id, task_id: task_id } } }
+    let(:valid_attributes) { { measurement: { value: 11, user_id: user_id, task_id: task_id } }.to_json }
 
     context 'when the record exists' do
-      before { put "/measurements/#{measurement_id}", params: valid_attributes }
+      before { put "/measurements/#{measurement_id}", params: valid_attributes, headers: headers }
 
       it 'returns the measurement' do
         expect(json).not_to be_empty
@@ -104,7 +105,7 @@ RSpec.describe 'Tasks API', type: :request do
 
   # Test suite for DELETE /tasks/:id
   describe 'DELETE /measurements/:id' do
-    before { delete "/measurements/#{measurement_id}" }
+    before { delete "/measurements/#{measurement_id}", headers: headers }
 
     it 'returns status code 204' do
       expect(response).to have_http_status(204)
