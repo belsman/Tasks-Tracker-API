@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_075709) do
+ActiveRecord::Schema.define(version: 2021_04_10_052438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "measurements", force: :cascade do |t|
-    t.bigint "value"
+    t.integer "value"
+    t.bigint "task_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "task_id"
-    t.bigint "user_id"
     t.index ["task_id"], name: "index_measurements_on_task_id"
     t.index ["user_id"], name: "index_measurements_on_user_id"
   end
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_075709) do
     t.string "name"
     t.string "description"
     t.text "measurement_unit"
-    t.bigint "daily_target"
+    t.integer "daily_target"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -38,6 +38,8 @@ ActiveRecord::Schema.define(version: 2021_04_09_075709) do
     t.string "username"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "email"
+    t.string "password_digest"
   end
 
   add_foreign_key "measurements", "tasks"
