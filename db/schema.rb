@@ -10,38 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_10_052438) do
+ActiveRecord::Schema.define(version: 2021_04_07_173637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "measurements", force: :cascade do |t|
-    t.integer "value"
-    t.bigint "task_id", null: false
+    t.float "running"
+    t.float "reading"
+    t.float "coding"
+    t.float "project"
+    t.float "movie"
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["task_id"], name: "index_measurements_on_task_id"
     t.index ["user_id"], name: "index_measurements_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.string "description"
-    t.text "measurement_unit"
-    t.integer "daily_target"
+    t.float "daily_target"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.string "email"
     t.string "password_digest"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "measurements", "tasks"
   add_foreign_key "measurements", "users"
 end
