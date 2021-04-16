@@ -3,8 +3,9 @@ require 'rails_helper'
 
 RSpec.describe 'Tasks API', type: :request do
   # initialize test data
-  let!(:tasks) { create_list(:task, 5) }
   let!(:user) { create(:user) }
+  let(:user_id) { user.id }
+  let!(:tasks) { create_list(:task, 5) }
   let(:task_id) { tasks.first.id }
 
   let(:headers) { valid_headers }
@@ -53,16 +54,16 @@ RSpec.describe 'Tasks API', type: :request do
   # Test suite for POST /tasks
   describe 'POST /tasks' do
     let(:valid_attributes) do
-      { task: { name: 'Running', description: 'Lorem stuffs goes here', measurement_unit: 'km',
+      { task: { name: 'running', description: 'Lorem stuffs goes here',
                 daily_target: 1 } }.to_json
     end
-    let(:invalid_attributes) { { task: { name: 'Running' } }.to_json }
+    let(:invalid_attributes) { { task: { name: 'running' } }.to_json }
 
     context 'when the request is valid' do
       before { post '/tasks', params: valid_attributes, headers: headers }
 
       it 'creates a task' do
-        expect(json['name']).to eq('Running')
+        expect(json['name']).to eq('running')
       end
 
       it 'returns status code 201' do
@@ -90,7 +91,7 @@ RSpec.describe 'Tasks API', type: :request do
   # Test suite for PATCH /tasks/:id
   describe 'PUT /tasks/:id' do
     let(:valid_attributes) do
-      { task: { name: 'Running X', description: 'Lorem stuffs goes here', measurement_unit: 'km',
+      { task: { name: 'running X', description: 'Lorem stuffs goes here',
                 daily_target: 1 } }.to_json
     end
 
@@ -104,7 +105,7 @@ RSpec.describe 'Tasks API', type: :request do
 
       it 'returns the task with an edited name' do
         expect(json).not_to be_empty
-        expect(json['name']).to eq('Running X')
+        expect(json['name']).to eq('running X')
       end
 
       it 'returns status code 200' do

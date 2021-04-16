@@ -47,6 +47,6 @@ class MeasurementsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def measurement_params
-    params.require(:measurement).permit(:value, :task_id, :user_id)
+    params.require(:measurement).permit(:reading, :coding, :running, :movie, :project, :user_id)
   end
 end

@@ -1,17 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe AuthorizeApiRequest do
-  # Create test user
   let(:user) { create(:user) }
-  # Mock `Authorization` header
   let(:header) { { 'Authorization' => token_generator(user.id) } }
-  # Invalid request subject
+
   subject(:invalid_request_obj) { described_class.new({}) }
-  # Valid request subject
   subject(:request_obj) { described_class.new(header) }
 
-  # Test Suite for AuthorizeApiRequest#call
-  # This is our entry point into the service class
   describe '#call' do
     # returns user object when request is valid
     context 'when valid request' do
@@ -21,7 +16,7 @@ RSpec.describe AuthorizeApiRequest do
       end
     end
 
-    # returns error message when invalid request
+    # rubocop:disable Metrics/BlockLength
     context 'when invalid request' do
       context 'when missing token' do
         it 'raises a MissingToken error' do
@@ -32,7 +27,6 @@ RSpec.describe AuthorizeApiRequest do
 
       context 'when invalid token' do
         subject(:invalid_request_obj) do
-          # custom helper method `token_generator`
           described_class.new('Authorization' => token_generator(5))
         end
 
@@ -68,5 +62,6 @@ RSpec.describe AuthorizeApiRequest do
         end
       end
     end
+    # rubocop:enable Metrics/BlockLength
   end
 end

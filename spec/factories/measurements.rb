@@ -1,8 +1,11 @@
 FactoryBot.define do
   factory :measurement do
-    value { Faker::Number.number(digits: 4) }
+    running { Faker::Number.number(digits: 2) }
+    reading { Faker::Number.number(digits: 2) }
+    coding { Faker::Number.number(digits: 2) }
+    project { Faker::Number.number(digits: 2) }
+    movie { Faker::Number.number(digits: 2) }
     user { Faker::Number.number(digits: 4) }
-    task { Faker::Number.number(digits: 4) }
   end
 
   factory :user do
