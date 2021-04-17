@@ -15,7 +15,7 @@ class MeasurementsController < ApplicationController
 
   # POST /measurements
   def create
-    @measurement = Measurement.new(measurement_params)
+    @measurement = current_user.measurements.new(measurement_params)
 
     if @measurement.save
       render json: @measurement, status: :created, location: @measurement
@@ -47,6 +47,6 @@ class MeasurementsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def measurement_params
-    params.require(:measurement).permit(:reading, :coding, :running, :movie, :project, :user_id)
+    params.permit(:reading, :coding, :running, :movie, :project)
   end
 end

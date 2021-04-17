@@ -52,9 +52,9 @@ RSpec.describe 'Tasks API', type: :request do
 
   describe 'POST /measurements' do
     let(:valid_attributes) do
-      { measurement: { running: 1, reading: 3, coding: 5, movie: 7, project: 11, user_id: user_id } }.to_json
+      { running: 1, reading: 3, coding: 5, movie: 7, project: 11 }.to_json
     end
-    let(:invalid_attributes) { { measurement: { running: 1 } }.to_json }
+    let(:invalid_attributes) { { running: 1 }.to_json }
 
     context 'when the request is valid' do
       before { post '/measurements', params: valid_attributes, headers: headers }
@@ -83,7 +83,7 @@ RSpec.describe 'Tasks API', type: :request do
 
   describe 'PUT /measurements/:id' do
     let(:valid_attributes) do
-      { measurement: { running: 1, reading: 3, coding: 5, movie: 7, project: 11, user_id: user_id } }.to_json
+      { running: 1, reading: 3, coding: 5, movie: 7, project: 11 }.to_json
     end
 
     context 'when the record exists' do
