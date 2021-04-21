@@ -5,7 +5,8 @@ class MeasurementsController < ApplicationController
   def index
     @measurements = Measurement.all
 
-    render json: @measurements
+    @filtered_measurement = @measurements.filter { |m| m.user_id == current_user.id }
+    render json: @filtered_measurement
   end
 
   # GET /measurements/1
