@@ -9,7 +9,7 @@ FactoryBot.define do
   end
 
   factory :user do
-    username { Faker::Lorem.word }
+    username { 'exboybeekay' }
     email { 'foo@bar.com' }
     password { 'foobar' }
   end

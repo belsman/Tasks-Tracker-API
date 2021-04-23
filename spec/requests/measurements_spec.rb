@@ -1,7 +1,7 @@
 # spec/requests/items_spec.rb
 require 'rails_helper'
 
-RSpec.describe 'Tasks API', type: :request do
+RSpec.describe 'Measurenent API', type: :request do
   # initialize test data
   let!(:user) { create(:user) }
   let!(:measurements) { create_list(:measurement, 20, user_id: user.id) }
@@ -78,39 +78,6 @@ RSpec.describe 'Tasks API', type: :request do
       it 'returns a validation failure message' do
         expect(json['reading']).to eq(["can't be blank"])
       end
-    end
-  end
-
-  describe 'PUT /measurements/:id' do
-    let(:valid_attributes) do
-      { running: 1, reading: 3, coding: 5, movie: 7, project: 11 }.to_json
-    end
-
-    context 'when the record exists' do
-      before { put "/measurements/#{measurement_id}", params: valid_attributes, headers: headers }
-
-      it 'returns the measurement' do
-        expect(json).not_to be_empty
-        expect(json['id']).to eq(measurement_id)
-      end
-
-      it 'returns the measurement with an edited name' do
-        expect(json).not_to be_empty
-        expect(json['project']).to eq(11)
-      end
-
-      it 'returns status code 200' do
-        expect(response).to have_http_status(200)
-      end
-    end
-  end
-
-  # Test suite for DELETE /tasks/:id
-  describe 'DELETE /measurements/:id' do
-    before { delete "/measurements/#{measurement_id}", headers: headers }
-
-    it 'returns status code 204' do
-      expect(response).to have_http_status(204)
     end
   end
 end
